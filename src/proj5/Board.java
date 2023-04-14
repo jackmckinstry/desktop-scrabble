@@ -14,8 +14,8 @@ public class Board {
 		}
 	}
 	
-	public Cell getCell(int x, int y) {
-		return cellArray[x][y];
+	public Tile getTile(int x, int y) {
+		return cellArray[x][y].tile;
 	}
 	public void placeTile(Tile t, int x, int y) {
 		cellArray[x][y].tile = t;

@@ -6,7 +6,5 @@ public class Main {
 		Controller c = new ScrabbleController((ScrabbleModel) m);
 		View v = new ScrabbleView(c, (ScrabbleModel) m);
 		m.attatch(v);
-		
-		v.update();
 	}
 }

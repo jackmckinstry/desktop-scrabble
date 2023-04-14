@@ -13,13 +13,30 @@ public class Cell {
 		placementFinalized = false;
 	}
 	
-	public String tileLetter() {
+	public String letterString() {
 		if (tile == null) {
-			return "";
+			return " ";
 		}
 		
 		return Character.toString(tile.letter);
 	}
+	public String valueString() {
+		if (tile == null) {
+			return " ";
+		}
+		
+		return Integer.toString(tile.value);
+	}
+	public String multiplierString() {
+		if (letterMultiplier == 1) {
+			if (wordMultiplier == 1) {
+				return " ";
+			}
+			return wordMultiplier + "x Word";
+		}
+		return letterMultiplier + "x Letter";
+	}
+	
 	public int tileValue() {
 		if (tile == null) {
 			return 0;
@@ -38,5 +55,4 @@ public class Cell {
 			return wordMultiplier;
 		}
 	}
-	
 }
