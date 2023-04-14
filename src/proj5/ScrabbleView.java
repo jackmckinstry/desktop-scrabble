@@ -6,18 +6,17 @@ import java.awt.*;
 public class ScrabbleView extends View {
 	private ScrabbleModel model;
 	private JFrame f;
+	private TileListener tileListener;
 	
 	private CellPanel board[][], inventory[];
-	private TileListener tileListener;
 	
 	public ScrabbleView(Controller c, ScrabbleModel m) {
 		super(c);
 		model = m;
 		f = new JFrame();
-		
 		tileListener = new TileListener(controller);
 		
-		// create 15x15 grid of cells
+		// 15x15 grid of cells
 		JPanel boardPanel = new JPanel(new GridLayout(15, 15, 2, 2));
 		board = new CellPanel[15][15];
 		for (int x = 0; x < 15; x++) {
@@ -27,7 +26,7 @@ public class ScrabbleView extends View {
 			}
 		}
 		
-		// create 7 inventory slots
+		// 7 inventory slots
 		JPanel inventoryPanel = new JPanel(new GridLayout(1, 7, 2, 2));
 		inventory = new CellPanel[7];
 		for (int i = 0; i < 7; i++) {
@@ -35,9 +34,17 @@ public class ScrabbleView extends View {
 			inventoryPanel.add(inventory[i]);
 		}
 		
+		// header panel with player name
+		JPanel headerPanel = new JPanel();
+		JLabel headerLabel = new JLabel(model.getTurnString());
+		headerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPanel.add(headerLabel);
+		
 		
 		// render the main window
 		f.setLayout(new BorderLayout());
+		f.add(headerPanel, BorderLayout.PAGE_START);
 		f.add(boardPanel, BorderLayout.CENTER);
 		f.add(inventoryPanel, BorderLayout.PAGE_END);
 		f.setSize(1000, 1000);
@@ -51,6 +58,7 @@ public class ScrabbleView extends View {
 			}
 		}
 		for (int i = 0; i < 7; i++) {
+			inventory[i].cell = model.getCurrentPlayerSlot(i);
 			inventory[i].updateTile();
 		}
 	}

@@ -7,6 +7,7 @@ import java.awt.event.*;
 public class CellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	Cell cell;
+	boolean selected = false;
 	
 	JLabel valueLabel;
 	JLabel letterLabel;
@@ -14,8 +15,9 @@ public class CellPanel extends JPanel {
 	
 	CellPanel(Cell c, MouseListener listener) {
 		cell = c;
+		selected = false;
 		
-		setBackground(Color.WHITE);
+		updateColor();
 		addMouseListener(listener);
 		setLayout(new GridLayout(3,1));
 			
@@ -43,5 +45,35 @@ public class CellPanel extends JPanel {
 		valueLabel.setText(cell.valueString());
 		letterLabel.setText(cell.letterString());
 		multiplierLabel.setText(cell.multiplierString());
+		
+		updateColor();
+	}
+	
+	public void select() {
+		selected = true;
+		updateColor();
+	}
+	public void deselect() {
+		selected = false;
+		updateColor();
+	}
+	
+	public void updateColor() {
+		// color depends on if cell is selected, has a tile, and word/letter multiplier
+		if (selected) {
+			setBackground(Color.LIGHT_GRAY);
+		} else if (cell.tile != null) {
+			setBackground(Color.ORANGE);
+		} else if (cell.wordMultiplier == 3) {
+			setBackground(Color.RED);
+		} else if (cell.wordMultiplier == 2) {
+			setBackground(Color.PINK);
+		} else if (cell.letterMultiplier == 3) {
+			setBackground(Color.BLUE);
+		} else if (cell.letterMultiplier == 2) {
+			setBackground(Color.CYAN);
+		} else {
+			setBackground(Color.WHITE);
+		}
 	}
 }

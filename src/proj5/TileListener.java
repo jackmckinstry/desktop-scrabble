@@ -1,6 +1,5 @@
 package proj5;
 
-import java.awt.Color;
 import java.awt.event.*;
 
 public class TileListener implements MouseListener {
@@ -16,23 +15,16 @@ public class TileListener implements MouseListener {
 		CellPanel clicked = (CellPanel) event.getSource();
 		
 		if (selected == clicked) { // deselect a cell
-			deselect();
+			selected.deselect();
+			selected = null;
 		} else if (selected == null) { // select a cell
 			selected = clicked;
-			clicked.setBackground(Color.CYAN);
+			clicked.select();
 		} else { // swap cells
 			controller.handleEvent(new MoveTile(selected.cell, clicked.cell));
-			deselect();
+			selected.deselect();
+			selected = null;
 		}
-	}
-	
-	public void deselect() {
-		selected.setBackground(Color.WHITE);
-		selected = null;
-	}
-	
-	public boolean hasSelected() {
-		return selected != null;
 	}
 	
 	public void mouseEntered(MouseEvent event) {}
