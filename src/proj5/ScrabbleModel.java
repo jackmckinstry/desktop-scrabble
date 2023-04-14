@@ -25,15 +25,15 @@ public class ScrabbleModel extends Model {
 		return board.cellArray[x][y];
 	}
 	
-	public InventorySlot getCurrentPlayerSlot(int i) {
+	public Cell getCurrentPlayerSlot(int i) {
 		return players.get(currentPlayer).tileInventory[i];
 	}
 	
-	public void swapTiles(Cell selectedCell, InventorySlot selectedSlot) {
+	public void moveTile(Cell c1, Cell c2) {
 		// swap tile between inventory and board (one may be null)
-		Tile tempTile = selectedCell.tile;
-		selectedCell.tile = selectedSlot.tile;
-		selectedSlot.tile = tempTile;
+		Tile tempTile = c1.tile;
+		c1.tile = c2.tile;
+		c2.tile = tempTile;
 		
 		updateViews();
 	}

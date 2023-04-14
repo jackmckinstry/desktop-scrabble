@@ -3,32 +3,26 @@ package proj5;
 import java.awt.Color;
 import java.awt.event.*;
 
-import javax.swing.JPanel;
-
 public class TileListener implements MouseListener {
-	private ScrabbleView callback;
-	public JPanel selected;
+	private Controller controller;
+	private CellPanel selected;
 	
-	public TileListener(ScrabbleView cb) {
-		callback = cb;
+	public TileListener(Controller c) {
+		controller = c;
 		selected = null;
 	}
 	
 	public void mouseClicked(MouseEvent event) {
-		JPanel clicked = (JPanel) event.getSource();
+		CellPanel clicked = (CellPanel) event.getSource();
 		
-		if (selected == clicked) {
-			// deselect a cell
+		if (selected == clicked) { // deselect a cell
 			deselect();
-		} else {
-			// deselect a cell (if applicable) and select a new cell
-			if (selected != null) {
-				deselect();
-			}
+		} else if (selected == null) { // select a cell
 			selected = clicked;
 			clicked.setBackground(Color.CYAN);
-			
-			callback.tileSelected();
+		} else { // swap cells
+			controller.handleEvent(new MoveTile(selected.cell, clicked.cell));
+			deselect();
 		}
 	}
 	

@@ -7,16 +7,13 @@ import java.awt.event.*;
 public class CellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	Cell cell;
-	int x, y;
 	
 	JLabel valueLabel;
 	JLabel letterLabel;
 	JLabel multiplierLabel;
 	
-	CellPanel(Cell c, MouseListener listener, int x, int y) {
+	CellPanel(Cell c, MouseListener listener) {
 		cell = c;
-		this.x = x;
-		this.y = y;
 		
 		setBackground(Color.WHITE);
 		addMouseListener(listener);

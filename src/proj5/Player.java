@@ -1,15 +1,15 @@
 package proj5;
 
 public class Player {
-	public InventorySlot tileInventory[];
+	public Cell tileInventory[];
 	private int totalPoints;
 	public String name;
 	
 	public Player(String n) {
 		// initialize empty inventory
-		tileInventory = new InventorySlot[7];
+		tileInventory = new Cell[7];
 		for (int i = 0; i < 7; i++) {
-			tileInventory[i] = new InventorySlot();
+			tileInventory[i] = new Cell(1,1);
 		}
 		
 		totalPoints = 0;
