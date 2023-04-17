@@ -6,12 +6,9 @@ import java.awt.event.*;
 
 public class CellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	Cell cell;
-	boolean selected = false;
-	
-	JLabel valueLabel;
-	JLabel letterLabel;
-	JLabel multiplierLabel;
+	public Cell cell;
+	public boolean selected;
+	private JLabel valueLabel, letterLabel, multiplierLabel;
 	
 	CellPanel(Cell c, MouseListener listener) {
 		cell = c;
@@ -59,20 +56,21 @@ public class CellPanel extends JPanel {
 	}
 	
 	public void updateColor() {
-		// color depends on if cell is selected, has a tile, and word/letter multiplier
-		if (selected) {
+		if (selected) { 						// selected = gray
 			setBackground(Color.LIGHT_GRAY);
-		} else if (cell.tile != null) {
+		} else if (cell.placementFinalized) {	// placed tile = orange
 			setBackground(Color.ORANGE);
-		} else if (cell.wordMultiplier == 3) {
+		} else if (cell.tile != null) {			// unplaced tile = yellow
+			setBackground(Color.YELLOW);
+		} else if (cell.wordMultiplier == 3) {	// empty cell with 3x word multiplier = red
 			setBackground(Color.RED);
-		} else if (cell.wordMultiplier == 2) {
+		} else if (cell.wordMultiplier == 2) {	// empty cell with 2x word multiplier = pink
 			setBackground(Color.PINK);
-		} else if (cell.letterMultiplier == 3) {
+		} else if (cell.letterMultiplier == 3) {// empty cell with 3x letter multiplier = blue
 			setBackground(Color.BLUE);
-		} else if (cell.letterMultiplier == 2) {
+		} else if (cell.letterMultiplier == 2) {// empty cell with 2x letter multiplier = cyan
 			setBackground(Color.CYAN);
-		} else {
+		} else {								// empty cell with no multiplier = white
 			setBackground(Color.WHITE);
 		}
 	}

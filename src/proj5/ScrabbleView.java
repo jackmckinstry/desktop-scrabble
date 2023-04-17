@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ScrabbleView extends View {
 	private ScrabbleModel model;
-	private JFrame f;
+	private JFrame frame;
 	private TileListener tileListener;
 	
 	private CellPanel board[][], inventory[];
@@ -13,7 +13,7 @@ public class ScrabbleView extends View {
 	public ScrabbleView(Controller c, ScrabbleModel m) {
 		super(c);
 		model = m;
-		f = new JFrame();
+		frame = new JFrame();
 		tileListener = new TileListener(controller);
 		
 		// 15x15 grid of cells
@@ -34,7 +34,7 @@ public class ScrabbleView extends View {
 			inventoryPanel.add(inventory[i]);
 		}
 		
-		// header panel with player name
+		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();
 		JLabel headerLabel = new JLabel(model.getTurnString());
 		headerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -43,12 +43,12 @@ public class ScrabbleView extends View {
 		
 		
 		// render the main window
-		f.setLayout(new BorderLayout());
-		f.add(headerPanel, BorderLayout.PAGE_START);
-		f.add(boardPanel, BorderLayout.CENTER);
-		f.add(inventoryPanel, BorderLayout.PAGE_END);
-		f.setSize(1000, 1000);
-		f.setVisible(true);
+		frame.setLayout(new BorderLayout());
+		frame.add(headerPanel, BorderLayout.PAGE_START);
+		frame.add(boardPanel, BorderLayout.CENTER);
+		frame.add(inventoryPanel, BorderLayout.PAGE_END);
+		frame.setSize(1000, 1000);
+		frame.setVisible(true);
 	}
 	
 	public void update() {

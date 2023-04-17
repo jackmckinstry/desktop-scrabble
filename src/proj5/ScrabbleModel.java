@@ -3,25 +3,34 @@ package proj5;
 import java.util.ArrayList;
 
 public class ScrabbleModel extends Model {
-	Board board;
-	ArrayList<Player> players;
-	int currentPlayer;
-	int turnNumber;
+	private Board board;
+	private TileBag bag;
+	private ArrayList<Player> players;
+	private int currentPlayer, turnNumber;
 	
 	public ScrabbleModel() {
 		board = new Board();
+		bag = new TileBag();
 		
 		players = new ArrayList<Player>();
 		currentPlayer = 0;
 		turnNumber = 1;
 		
 		// for testing
-		board.placeTile(new Tile('A',1), 0, 0);
-		board.placeTile(new Tile('B',3), 1, 2);
 		players.add(new Player("Player 1"));
-		players.get(0).tileInventory[0].tile = new Tile('C',3);
+		distributeTiles();
 	}
 	
+	public void distributeTiles() {
+		// fill up all tiles in all player inventories
+		for (Player p : players) {
+			for (Cell c : p.tileInventory) {
+				if (c.tile == null) {
+					c.tile = bag.pickTile();
+				} 
+			}
+		}
+	}
 	
 	public Cell getCell(int x, int y) {
 		return board.cellArray[x][y];

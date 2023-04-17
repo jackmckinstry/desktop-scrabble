@@ -2,8 +2,7 @@ package proj5;
 
 public class Cell {
 	public Tile tile;
-	public int letterMultiplier;
-	public int wordMultiplier;
+	public int letterMultiplier,  wordMultiplier;
 	public boolean placementFinalized;
 	
 	public Cell(int lm, int wm) {
