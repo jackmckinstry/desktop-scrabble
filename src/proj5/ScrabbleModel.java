@@ -56,35 +56,51 @@ public class ScrabbleModel extends Model {
 	}
 	
 	public void finishTurn() {
-		// check alignment of letters are connected to another word after first turn
-		if (turnNumber > 1) {
-			for (int x = 0; x < 15; x++) {
-				for (int y = 0; y < 15; y++) {
-					Cell c = getCell(x, y);
-					if (c.tile != null) {
-						boolean adjacent = false;
-						// above
-						if (y > 0) {
-							adjacent = getCell(x, y-1).tile != null;
-						}
-						// left
-						if (!adjacent && x > 0) {
-							adjacent = getCell(x-1, y).tile != null;
-						}
-						// right
-						if (!adjacent && x < 14) {
-							adjacent = getCell(x+1, y).tile != null;
-						}
-						// below
-						if (!adjacent && y < 14) {
-							adjacent = getCell(x, y+1).tile != null;
-						}
-						
-						if (!adjacent) return;
-					}
+		// check all letters are connected to another letter
+		for (int x = 0; x < 15; x++) {
+			for (int y = 0; y < 15; y++) {
+				Cell c = getCell(x, y);
+				if (c.tile != null) {
+					boolean adjacent = false;
+					// above
+					if (y > 0) adjacent = getCell(x, y-1).tile != null;
+					// left
+					if (!adjacent && x > 0) adjacent = getCell(x-1, y).tile != null;
+					// right
+					if (!adjacent && x < 14) adjacent = getCell(x+1, y).tile != null;
+					// below
+					if (!adjacent && y < 14) adjacent = getCell(x, y+1).tile != null;
+					
+					if (!adjacent) return;
 				}
 			}
 		}
+		
+		// after first turn, ensure the word attempting to be played is connected to another word that already exists on the board
+		if (turnNumber > 1) {
+			boolean adjacentToPlaced = false;
+			for (int x = 0; x < 15; x++) {
+				for (int y = 0; y < 15; y++) {
+					if (adjacentToPlaced) break;
+					Cell c = getCell(x, y);
+					if (c.tile != null && !c.placementFinalized) {
+						// at least one tile must be touching a placement finalized tile
+						// above
+						if (y > 0) adjacentToPlaced = getCell(x, y-1).placementFinalized;
+						// left
+						if (!adjacentToPlaced && x > 0) adjacentToPlaced = getCell(x-1, y).placementFinalized;
+						// right
+						if (!adjacentToPlaced && x < 14) adjacentToPlaced = getCell(x+1, y).placementFinalized;
+						// below
+						if (!adjacentToPlaced && y < 14) adjacentToPlaced = getCell(x, y+1).placementFinalized;
+					}
+				}
+				if (adjacentToPlaced) break;
+			}
+			if (!adjacentToPlaced) return;
+		}
+		
+		// TODO also need to ensure that each placed word is touching a new letter too, (in order to avoid playing multiple, separate words) might need to use recursion
 		
 		// TODO validate word
 		// WordChecker.getInstance().isValidWord(null);
