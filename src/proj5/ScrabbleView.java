@@ -16,6 +16,7 @@ public class ScrabbleView extends View {
 	private TileListener tileListener;
 	private ButtonListener buttonListener;
 	private JLabel headerLabel;
+	private boolean initialized ;
 	
 	private CellPanel board[][], inventory[];
 	
@@ -26,6 +27,10 @@ public class ScrabbleView extends View {
 		tileListener = new TileListener(controller);
 		buttonListener = new ButtonListener(controller);
 		
+		initialized  = false;
+	}
+	
+	public void initializeBoard() {
 		// 15x15 grid of cells
 		JPanel boardPanel = new JPanel(new GridLayout(15, 15, 2, 2));
 		board = new CellPanel[15][15];
@@ -68,9 +73,13 @@ public class ScrabbleView extends View {
 		frame.add(inventoryPanel, BorderLayout.PAGE_END);
 		frame.setSize(1000, 1000);
 		frame.setVisible(true);
+		
+		initialized = true;
 	}
 	
 	public void update() {
+		if (!initialized) initializeBoard();
+		
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
 				board[x][y].updateTile();

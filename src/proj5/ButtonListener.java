@@ -17,5 +17,14 @@ public class ButtonListener implements ActionListener {
 		} else if (src.toString().contains("Exchange Letters")) {
 			// controller.handleEvent(new ExchangeTiles());
 		}
+		else if (src.toString().contains("Two")) {
+			controller.handleEvent(new StartGame(2));
+		}
+		else if (src.toString().contains("Three")) {
+			controller.handleEvent(new StartGame(3));
+		}
+		else if (src.toString().contains("Four")) {
+			controller.handleEvent(new StartGame(4));
+		}
 	}
 }

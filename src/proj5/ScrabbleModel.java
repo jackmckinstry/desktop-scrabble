@@ -15,12 +15,6 @@ public class ScrabbleModel extends Model {
 		players = new ArrayList<Player>();
 		currentPlayer = 0;
 		turnNumber = 1;
-		totalPlayers = 2; // TODO
-		
-		// for testing
-		players.add(new Player("Player 1"));
-		players.add(new Player("Player 2"));
-		distributeTiles();
 	}
 	
 	public void distributeTiles() {
@@ -44,6 +38,18 @@ public class ScrabbleModel extends Model {
 	
 	public String getTurnString() {
 		return players.get(currentPlayer).name + " - Turn " + turnNumber + " - Score: " + players.get(currentPlayer).getTotalPoints();
+	}
+	
+	public void startGame(int num_players) {
+		totalPlayers = num_players;
+		
+		for (int i = 1; i <= num_players; i++) {
+			players.add(new Player("Player " + i));
+		}
+
+		distributeTiles();
+		
+		updateViews();
 	}
 	
 	public void moveTile(Cell c1, Cell c2) {
