@@ -6,7 +6,9 @@ public class Main {
 		Controller c = new ScrabbleController((ScrabbleModel) m);
 		View mV = new MenuView(c, (ScrabbleModel) m);
 		View sV = new ScrabbleView(c, (ScrabbleModel) m);
+		View lV = new LeaderboardView(c, (ScrabbleModel) m);
 		m.attatch(mV);
 		m.attatch(sV);
+		m.attatch(lV);
 	}
 }

@@ -15,9 +15,9 @@ public abstract class Model {
 	public void detach(View v) {
 		views.remove(v);
 	}
-	public void updateViews() {
+	public void updateViews(GameState state) {
 		for (View v : views) {
-			v.update();
+			v.update(state);
 		}
 	}
 }

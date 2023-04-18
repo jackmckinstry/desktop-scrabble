@@ -48,7 +48,7 @@ public class MenuView extends View {
 		frame.setVisible(true);
 	}
 	
-	public void update() {
-		frame.setVisible(false);
+	public void update(GameState state) {
+		if (state != GameState.MENU) frame.setVisible(false);
 	}
 }

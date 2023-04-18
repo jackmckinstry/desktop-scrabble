@@ -15,7 +15,7 @@ public class ButtonListener implements ActionListener {
 		if (src.toString().contains("Finish Turn")) {
 			controller.handleEvent(new FinishTurn());
 		} else if (src.toString().contains("Exchange Letters")) {
-			// controller.handleEvent(new ExchangeTiles());
+			controller.handleEvent(new ExchangeTiles());
 		}
 		else if (src.toString().contains("Two")) {
 			controller.handleEvent(new StartGame(2));

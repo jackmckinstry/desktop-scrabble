@@ -77,7 +77,12 @@ public class ScrabbleView extends View {
 		initialized = true;
 	}
 	
-	public void update() {
+	public void update(GameState state) {
+		if (state != GameState.GAME) {
+			frame.setVisible(false);
+			return;
+		}
+		
 		if (!initialized) initializeBoard();
 		
 		for (int x = 0; x < 15; x++) {

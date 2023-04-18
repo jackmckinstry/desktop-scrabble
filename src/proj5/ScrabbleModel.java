@@ -49,7 +49,7 @@ public class ScrabbleModel extends Model {
 
 		distributeTiles();
 		
-		updateViews();
+		updateViews(GameState.GAME);
 	}
 	
 	public void moveTile(Cell c1, Cell c2) {
@@ -58,7 +58,7 @@ public class ScrabbleModel extends Model {
 		c1.tile = c2.tile;
 		c2.tile = tempTile;
 		
-		updateViews();
+		updateViews(GameState.GAME);
 	}
 	
 	public void finishTurn() {
@@ -134,7 +134,9 @@ public class ScrabbleModel extends Model {
 		}
 		
 		if (bag.isEmpty()) {
-			// TODO end game, go to view of final scores
+			// end game, go to view of final scores
+			updateViews(GameState.GAME_OVER);
+			return;
 		}
 		
 		// repopulate currentPlayer's inventory from tile bag
@@ -145,6 +147,14 @@ public class ScrabbleModel extends Model {
 		if (currentPlayer == totalPlayers) currentPlayer = 0;
 		turnNumber++;
 		
-		updateViews();
+		updateViews(GameState.GAME);
+	}
+	
+	public void exchangeTiles() {
+		updateViews(GameState.GAME_OVER); // TODO for testing; get rid of this & implement exchange tiles functionality
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 }
