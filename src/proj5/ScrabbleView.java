@@ -1,12 +1,21 @@
 package proj5;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class ScrabbleView extends View {
 	private ScrabbleModel model;
 	private JFrame frame;
 	private TileListener tileListener;
+	private ButtonListener buttonListener;
+	private JLabel headerLabel;
 	
 	private CellPanel board[][], inventory[];
 	
@@ -15,6 +24,7 @@ public class ScrabbleView extends View {
 		model = m;
 		frame = new JFrame();
 		tileListener = new TileListener(controller);
+		buttonListener = new ButtonListener(controller);
 		
 		// 15x15 grid of cells
 		JPanel boardPanel = new JPanel(new GridLayout(15, 15, 2, 2));
@@ -36,11 +46,20 @@ public class ScrabbleView extends View {
 		
 		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();
-		JLabel headerLabel = new JLabel(model.getTurnString());
+		headerLabel = new JLabel(model.getTurnString());
 		headerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
 		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		headerPanel.add(headerLabel);
 		
+		// buttons for finishing turn and exchanging letters
+		JPanel buttonPanel = new JPanel();
+		JButton exchangeButton = new JButton("Exchange Letters");
+		JButton finishButton = new JButton("Finish Turn");
+		exchangeButton.addActionListener(buttonListener);
+		finishButton.addActionListener(buttonListener);
+		inventoryPanel.add(exchangeButton);
+		inventoryPanel.add(finishButton);
+		// TODO buttons should be below inventory panel as a separate JPanel
 		
 		// render the main window
 		frame.setLayout(new BorderLayout());
@@ -61,5 +80,7 @@ public class ScrabbleView extends View {
 			inventory[i].cell = model.getCurrentPlayerSlot(i);
 			inventory[i].updateTile();
 		}
+		
+		headerLabel.setText(model.getTurnString());
 	}
 }

@@ -17,6 +17,10 @@ public class TileBag {
 		}
 	}
 	
+	public boolean isEmpty() {
+		return tiles.isEmpty();
+	}
+	
 	void returnTile(Tile t) {
 		tiles.add(t);
 	}
