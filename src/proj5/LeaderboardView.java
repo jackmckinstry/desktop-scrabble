@@ -20,7 +20,10 @@ public class LeaderboardView extends View {
 		super(c);
 		model = m;
 		frame = new JFrame();
-		
+	}
+	
+	// rendering leaderboard needs to be outside of view's constructor so it can pull the player info at the end of the game
+	public void renderLeaderboard() {
 		JPanel headerPanel = new JPanel();
 		JLabel headerLabel = new JLabel("<html>Game Over!<br><br></html>");
 		headerLabel.setFont(new Font("Arial", Font.PLAIN, 48));
@@ -52,6 +55,7 @@ public class LeaderboardView extends View {
 	
 	public void update() {
 		if (model.gameEnded()) {
+			this.renderLeaderboard();
 			frame.setVisible(true);
 		} else {
 			frame.setVisible(false);
