@@ -54,4 +54,8 @@ public class Cell {
 			return wordMultiplier;
 		}
 	}
+	
+	public boolean hasTile() {
+		return tile != null;
+	}
 }

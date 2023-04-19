@@ -60,7 +60,7 @@ public class CellPanel extends JPanel {
 			setBackground(Color.LIGHT_GRAY);
 		} else if (cell.placementFinalized) {	// placed tile = orange
 			setBackground(Color.ORANGE);
-		} else if (cell.tile != null) {			// unplaced tile = yellow
+		} else if (cell.hasTile()) {			// unplaced tile = yellow
 			setBackground(Color.YELLOW);
 		} else if (cell.wordMultiplier == 3) {	// empty cell with 3x word multiplier = red
 			setBackground(Color.RED);

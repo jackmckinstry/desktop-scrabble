@@ -1,18 +1,12 @@
 package proj5;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 
 public class MenuView extends View {
 	private ScrabbleModel model;
 	private JFrame frame;
+	
 	private ButtonListener buttonListener;
 	
 	public MenuView(Controller c, ScrabbleModel m) {
@@ -44,11 +38,14 @@ public class MenuView extends View {
 		frame.setLayout(new BorderLayout());
 		frame.add(headerPanel, BorderLayout.PAGE_START);
 		frame.add(buttonPanel, BorderLayout.CENTER);
-		frame.setSize(1000, 1000);
-		frame.setVisible(true);
+		frame.setSize(1000,1000);
 	}
 	
-	public void update(GameState state) {
-		if (state != GameState.MENU) frame.setVisible(false);
+	public void update() {
+		if (model.getState() == GameState.MENU) {
+			frame.setVisible(true);
+		} else {
+			frame.setVisible(false);
+		}
 	}
 }

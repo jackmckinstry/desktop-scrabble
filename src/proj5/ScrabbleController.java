@@ -9,6 +9,5 @@ public class ScrabbleController extends Controller {
 	
 	public void handleEvent(Command c) {
 		c.execute(model);
-		
 	}
 }

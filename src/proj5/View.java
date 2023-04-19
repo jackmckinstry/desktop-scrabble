@@ -6,5 +6,5 @@ public abstract class View {
 	public View(Controller c) {
 		controller = c;
 	}
-	public abstract void update(GameState state);
+	public abstract void update();
 }
