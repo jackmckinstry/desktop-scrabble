@@ -7,7 +7,7 @@ public class ScrabbleModel extends Model {
 	private TileBag bag;
 	private ArrayList<Player> players;
 	private int currentPlayer, turnNumber;
-	private GameState state;
+	private boolean gameStarted, gameEnded;
 	
 	public ScrabbleModel() {
 		board = new Board();
@@ -17,7 +17,8 @@ public class ScrabbleModel extends Model {
 		currentPlayer = 0;
 		turnNumber = 1;
 		
-		state = GameState.MENU;
+		gameStarted = false;
+		gameEnded = false;
 	}
 	
 	public void distributeTiles() {
@@ -29,8 +30,6 @@ public class ScrabbleModel extends Model {
 				} 
 			}
 		}
-		
-		updateViews();
 	}
 	
 	public Cell getCell(int x, int y) {
@@ -39,6 +38,10 @@ public class ScrabbleModel extends Model {
 	
 	public Player getCurrentPlayer() {
 		return players.get(currentPlayer);
+	}
+	
+	public void newPlayer(String name) {
+		players.add(new Player(name));
 	}
 	
 	public String getTurnString() {
@@ -52,10 +55,6 @@ public class ScrabbleModel extends Model {
 		updateViews();
 	}
 	
-	public void newPlayer(String name) {
-		players.add(new Player(name));
-	}
-	
 	public void moveTile(Cell c1, Cell c2) {
 		// swap tile between inventory and board (either may be null)
 		Tile tempTile = c1.tile;
@@ -65,16 +64,20 @@ public class ScrabbleModel extends Model {
 		updateViews();
 	}
 	
-	public void exchangeTiles() {
-		updateViews(); // TODO for testing; get rid of this & implement exchange tiles functionality
-	}
-	
-	public void setState(GameState s) {
-		state = s;
+	public void startGame() {
+		gameStarted = true;
 		updateViews();
 	}
-	public GameState getState() {
-		return state;
+	public boolean gameStarted() {
+		return gameStarted;
+	}
+	
+	public void endGame() {
+		gameEnded = true;
+		updateViews();
+	}
+	public boolean gameEnded() {
+		return gameEnded;
 	}
 	
 	public ArrayList<Player> getPlayers() {

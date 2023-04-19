@@ -36,25 +36,6 @@ public class Cell {
 		return letterMultiplier + "x Letter";
 	}
 	
-	public int tileValue() {
-		if (tile == null) {
-			return 0;
-		}
-		
-		if (placementFinalized) {
-			return tile.value; // letter multiplier already used
-		} else {
-			return tile.value * letterMultiplier;
-		}
-	}
-	public int wordMultiplier() {
-		if (placementFinalized) {
-			return 1; // word multiplier already used
-		} else {
-			return wordMultiplier;
-		}
-	}
-	
 	public boolean hasTile() {
 		return tile != null;
 	}

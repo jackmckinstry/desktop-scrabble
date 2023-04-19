@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 
-
+// NOTE: I commented this out because my IDE doesn't like Comparator or Collections; feel free to uncomment
 //class PlayerComparator implements Comparator<Player> {
 //    public int compare(Player p1, Player p2) {
 //        return p2.getTotalPoints() - p1.getTotalPoints();
@@ -51,7 +51,7 @@ public class LeaderboardView extends View {
 	}
 	
 	public void update() {
-		if (model.getState() == GameState.LEADERBOARD) {
+		if (model.gameEnded()) {
 			frame.setVisible(true);
 		} else {
 			frame.setVisible(false);

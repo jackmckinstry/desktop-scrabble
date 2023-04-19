@@ -38,8 +38,8 @@ public class FinishTurn implements Command {
 			for (int y = 0; y < 15; y++) {
 				Cell c = m.getCell(x, y);
 				if (c.hasTile() && !c.placementFinalized) {
-					points += c.tileValue();
-					wordMultiplier *= c.wordMultiplier();
+					points += c.tile.value;
+					wordMultiplier *= c.wordMultiplier;
 					
 					c.placementFinalized = true;
 				}
@@ -59,7 +59,7 @@ public class FinishTurn implements Command {
 		}
 		
 		if (empty) {
-			m.setState(GameState.LEADERBOARD);
+			m.endGame();
 		} else {
 			m.nextTurn();
 		}	

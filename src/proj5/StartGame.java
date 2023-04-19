@@ -12,7 +12,7 @@ public class StartGame implements Command {
 			m.newPlayer("Player " + i);	
 		}
 		
-		m.setState(GameState.GAME);
 		m.distributeTiles();
+		m.startGame();
 	}
 }

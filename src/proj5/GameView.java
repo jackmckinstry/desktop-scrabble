@@ -79,7 +79,7 @@ public class GameView extends View {
 		// update player/turn text
 		headerLabel.setText(model.getTurnString());
 		
-		if (model.getState() == GameState.GAME) {
+		if (model.gameStarted() && !model.gameEnded()) {
 			frame.setVisible(true);
 		} else {
 			frame.setVisible(false);

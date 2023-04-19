@@ -6,6 +6,9 @@ public class ExchangeTiles implements Command {
 	}
 	
 	public void execute(ScrabbleModel m) {
-		m.exchangeTiles();
+		// TODO: allow selecting multiple tiles; return selected tiles to bag
+		
+		m.distributeTiles();
+		m.nextTurn();
 	}
 }

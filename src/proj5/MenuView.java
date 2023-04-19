@@ -42,7 +42,7 @@ public class MenuView extends View {
 	}
 	
 	public void update() {
-		if (model.getState() == GameState.MENU) {
+		if (!model.gameStarted()) {
 			frame.setVisible(true);
 		} else {
 			frame.setVisible(false);
