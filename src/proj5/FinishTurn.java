@@ -43,20 +43,22 @@ public class FinishTurn implements Command {
 					if (x == 0 || !model.getCell(x-1, y).hasTile()) { // has no tile to the left
 						if (x != 14 && model.getCell(x+1, y).hasTile()) { // has a tile to the right
 							// spells a word horizontally
-							if (!wordCheck.isValidWord(getWord(x, y, true))) {
+							int p = getPoints(x, y, 0, 0, true);
+							points += p;
+							if (p != 0 && !wordCheck.isValidWord(getWord(x, y, true))) {
 								return;
 							}
-							points += getPoints(x, y, 0, 0, true);
 						}
 					}
 					
 					if (y == 0 || !model.getCell(x, y-1).hasTile()) { // has no tile above
 						if (y != 14 && model.getCell(x, y+1).hasTile()) { // has a tile below
 							// spells a word horizontally
-							if (!wordCheck.isValidWord(getWord(x, y, false))) {
+							int p = getPoints(x, y, 0, 0, false);
+							points += p;
+							if (p != 0 && !wordCheck.isValidWord(getWord(x, y, false))) {
 								return;
 							}
-							points += getPoints(x, y, 0, 0, false);
 						}
 					}
 				}

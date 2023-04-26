@@ -19,8 +19,8 @@ public class WordChecker {
 		ENGLISH_WORDS = new ArrayList<String>();
 		
         while (s.hasNextLine()) {
-          String word = s.nextLine();
-          ENGLISH_WORDS.add(word);
+		    String word = s.nextLine();
+		    ENGLISH_WORDS.add(word);
         }
         
         s.close();
@@ -32,7 +32,15 @@ public class WordChecker {
         return instance;
     }
     
-    boolean isValidWord(String s) {
-    	return ENGLISH_WORDS.contains(s.toUpperCase());
+    boolean isValidWord(String match) {
+    	// replace blank tiles with . (matching any single character)
+    	String regex = match.replace(' ', '.');
+    	
+    	for (String s : ENGLISH_WORDS) {
+    		if (s.matches(regex)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 }
