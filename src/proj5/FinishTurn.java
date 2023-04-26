@@ -28,44 +28,44 @@ public class FinishTurn implements Command {
 		// recursively mark cells connected to center tile as valid
 		markValid(7, 7);
 		
-		// return if not all cells are valid, or if a word is misspelled
+		// return if not all cells are valid
 		WordChecker wordCheck = WordChecker.getInstance();
-		int points = 0;
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
 				// cell is not valid
 				if (!valid[x][y]) {
 					return;
 				}
-				
+			}
+		}
+		
+		// count points and ensure all words are valid
+		int points = 0;
+		for (int x = 0; x < 15; x++) {
+			for (int y = 0; y < 15; y++) {
 				// check validity of words
 				if (model.getCell(x, y).hasTile()) { // has a tile
-					if (x == 0 || !model.getCell(x-1, y).hasTile()) { // has no tile to the left
-						if (x != 14 && model.getCell(x+1, y).hasTile()) { // has a tile to the right
-							// spells a word horizontally
-							int p = getPoints(x, y, 0, 0, true);
-							points += p;
-							if (p != 0 && !wordCheck.isValidWord(getWord(x, y, true))) {
-								return;
-							}
+					if ((x == 0 || !model.getCell(x-1, y).hasTile()) // has no tile to the left
+					&& (x != 14 && model.getCell(x+1, y).hasTile())) { // has a tile to the right
+						// spells a word horizontally
+						int p = getPoints(x, y, 0, 0, true);
+						points += p;
+						if (p != 0 && !wordCheck.isValidWord(getWord(x, y, true))) {
+							return;
 						}
 					}
-					
-					if (y == 0 || !model.getCell(x, y-1).hasTile()) { // has no tile above
-						if (y != 14 && model.getCell(x, y+1).hasTile()) { // has a tile below
-							// spells a word horizontally
-							int p = getPoints(x, y, 0, 0, false);
-							points += p;
-							if (p != 0 && !wordCheck.isValidWord(getWord(x, y, false))) {
-								return;
-							}
+					if ((y == 0 || !model.getCell(x, y-1).hasTile()) // has no tile above
+					&& y != 14 && model.getCell(x, y+1).hasTile()) { // has a tile below
+						// spells a word horizontally
+						int p = getPoints(x, y, 0, 0, false);
+						points += p;
+						if (p != 0 && !wordCheck.isValidWord(getWord(x, y, false))) {
+							return;
 						}
 					}
 				}
 			}
 		}
-		
-		// if all tiles are valid, add the total points gained
 		model.getCurrentPlayer().addPoints(points);
 			
 		// finalize placement of newly-placed tiles
