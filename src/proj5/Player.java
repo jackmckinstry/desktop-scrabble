@@ -22,4 +22,13 @@ public class Player {
 	public int getTotalPoints() {
 		return totalPoints;
 	}
+	
+	public boolean inventoryEmpty() {
+		for (Cell c : tileInventory) {
+			if (c.hasTile()) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

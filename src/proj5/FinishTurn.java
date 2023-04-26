@@ -1,73 +1,100 @@
 package proj5;
 
 public class FinishTurn implements Command {
+	ScrabbleModel model;
+	boolean[][] valid;
+	int commonX, commonY; // used in recursive markValid algorithm
+
 	public FinishTurn() {
 		
 	}
 	
 	public void execute(ScrabbleModel m) {
+		model = m;
+		
 		// all empty cells are valid
-		boolean valid[][] = new boolean[15][15];
+		valid = new boolean[15][15];
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
-				valid[x][y] = !m.getCell(x, y).hasTile();
+				valid[x][y] = !model.getCell(x, y).hasTile();
 			}
 		}
 		
-		// recursively mark cells connected to center tile as valid
-		markValid(m, valid, 7, 7);
+		// these will hold the (x,y) coordinates of the first newly-placed tile
+		// either coordinate must be shared by all newly-placed tiles
+		commonX = -1;
+		commonY = -1;
 		
-		// return if not all cells are valid
+		// recursively mark cells connected to center tile as valid
+		markValid(7, 7);
+		
+		// return if not all cells are valid, or if a word is misspelled
+		WordChecker wordCheck = WordChecker.getInstance();
+		int points = 0;
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
+				// cell is not valid
 				if (!valid[x][y]) {
 					return;
+				}
+				
+				// check validity of words
+				if (model.getCell(x, y).hasTile()) { // has a tile
+					if (x == 0 || !model.getCell(x-1, y).hasTile()) { // has no tile to the left
+						if (x != 14 && model.getCell(x+1, y).hasTile()) { // has a tile to the right
+							// spells a word horizontally
+							if (!wordCheck.isValidWord(getWord(x, y, true))) {
+								return;
+							}
+							points += getPoints(x, y, 0, 0, true);
+						}
+					}
+					
+					if (y == 0 || !model.getCell(x, y-1).hasTile()) { // has no tile above
+						if (y != 14 && model.getCell(x, y+1).hasTile()) { // has a tile below
+							// spells a word horizontally
+							if (!wordCheck.isValidWord(getWord(x, y, false))) {
+								return;
+							}
+							points += getPoints(x, y, 0, 0, false);
+						}
+					}
 				}
 			}
 		}
 		
-		// TODO make sure all newly placed letters are in one row/column
-		
-		// TODO validate word
-		// WordChecker.getInstance().isValidWord(null);
+		// if all tiles are valid, add the total points gained
+		model.getCurrentPlayer().addPoints(points);
 			
-		// update score
-		int points = 0;
-		int wordMultiplier = 1;
+		// finalize placement of newly-placed tiles
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
-				Cell c = m.getCell(x, y);
+				Cell c = model.getCell(x, y);
 				if (c.hasTile() && !c.placementFinalized) {
-					points += c.tile.value;
-					wordMultiplier *= c.wordMultiplier;
-					
 					c.placementFinalized = true;
 				}
 			}
 		}
-		m.getCurrentPlayer().addPoints(points*wordMultiplier);
 		
-		m.distributeTiles();
-		
-		// check for end of game
-		boolean empty = true;
-		for (Cell c : m.getCurrentPlayer().tileInventory) {
-			if (c.hasTile()) {
-				empty = false;
-				break;
-			}
+		// 50 point bonus for using all 7 tiles
+		// TODO: ensure this doesn't happen when a player had <7 tiles to begin their turn
+		if (model.getCurrentPlayer().inventoryEmpty()) {
+			model.getCurrentPlayer().addPoints(50);
 		}
 		
-		if (empty) {
-			m.endGame();
+		model.distributeTiles();
+		
+		// game ends when there are no more tiles
+		if (model.getCurrentPlayer().inventoryEmpty()) {
+			model.endGame();
 		} else {
-			m.nextTurn();
+			model.nextTurn();
 		}	
 	}
 	
-	private void markValid(ScrabbleModel m, boolean[][] valid, int x, int y) {
+	private void markValid(int x, int y) {
 		if (x < 0 || x > 14 || y < 0 || y > 14) {
-			// not in bounds
+			// out of bounds
 			return;
 		}
 		
@@ -76,13 +103,86 @@ public class FinishTurn implements Command {
 			return;
 		}
 		
-		if (m.getCell(x, y).hasTile()) {
-			// mark valid and recursively check adjacent cells
-			valid[x][y] = true;
-			markValid(m, valid, x-1, y);
-			markValid(m, valid, x+1, y);
-			markValid(m, valid, x, y-1);
-			markValid(m, valid, x, y+1);
+		Cell c = model.getCell(x, y);
+		if (c.hasTile()) {
+			if (c.placementFinalized) {
+				// previously-placed tiles are always valid
+				valid[x][y] = true;
+			} else {
+				// newly-placed tiles are valid if they share the common row/column
+				if (commonX == -1 && commonY == -1) {
+					// set common (x,y) coordinates if they haven't been set already
+					commonX = x;
+					commonY = y;
+					valid[x][y] = true;
+				} else if (commonX == x) {
+					// matches common x coordinate
+					commonY = -1;
+					valid[x][y] = true;
+				} else if (commonY == y) {
+					// matches common y coordinate
+					commonX = -1;
+					valid[x][y] = true;
+				}
+			}
+			
+			// recursively check adjacent cells
+			markValid(x-1, y);
+			markValid(x+1, y);
+			markValid(x, y-1);
+			markValid(x, y+1);
+		}
+	}
+	
+	private String getWord(int x, int y, boolean isHorizontal) {
+		if (x > 14 || y > 14) {
+			// out of bounds
+			return "";
+		}
+		
+		Cell c = model.getCell(x, y);
+		if (!c.hasTile()) {
+			// end of word
+			return "";
+		}
+		
+		// recursively check all remaining letters in word
+		if (isHorizontal) {
+			return c.tile.letter + getWord(x+1, y, isHorizontal);
+		} else {
+			return c.tile.letter + getWord(x, y+1, isHorizontal);
+		}
+	}
+	
+	private int getPoints(int x, int y, int points, int wordMultiplier, boolean isHorizontal) {
+		if (x > 14 || y > 14) {
+			// out of bounds
+			return points * wordMultiplier;
+		}
+		
+		Cell c = model.getCell(x, y);
+		if (!c.hasTile()) {
+			// end of word
+			return points * wordMultiplier;
+		}
+		
+		if (c.placementFinalized) {
+			// previously-placed tile
+			points += c.tile.value;
+		} else {
+			// newly-placed tile
+			if (wordMultiplier == 0) {
+				wordMultiplier = 1;
+			}
+			wordMultiplier *= c.wordMultiplier;
+			points += c.tile.value * c.letterMultiplier;
+		}
+		
+		// recursively check all remaining letters in word
+		if (isHorizontal) {
+			return getPoints(x+1, y, points, wordMultiplier, isHorizontal);
+		} else {
+			return getPoints(x, y+1, points, wordMultiplier, isHorizontal);
 		}
 	}
 }
