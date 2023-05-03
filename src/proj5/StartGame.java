@@ -8,11 +8,6 @@ public class StartGame implements Command {
 	}
 	
 	public void execute(ScrabbleModel m) {
-		for (int i = 1; i <= num_players; i++) {
-			m.newPlayer("Player " + i);	
-		}
-		
-		m.distributeTiles();
-		m.startGame();
+		m.startGame(num_players);
 	}
 }

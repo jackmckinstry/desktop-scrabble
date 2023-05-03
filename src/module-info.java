@@ -1,7 +1,4 @@
 /**
- * 
- */
-/**
  * @author Alex Walker & Jack McKinstry
  *
  */

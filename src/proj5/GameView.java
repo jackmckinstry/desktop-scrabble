@@ -52,7 +52,6 @@ public class GameView extends View {
 		finishButton.addActionListener(buttonListener);
 		inventoryPanel.add(exchangeButton);
 		inventoryPanel.add(finishButton);
-		// TODO buttons should be below inventory panel as a separate JPanel?
 		
 		// render the main window
 		frame.setLayout(new BorderLayout());
@@ -63,23 +62,23 @@ public class GameView extends View {
 	}
 	
 	public void update() {
-		// update tiles on board
-		for (int x = 0; x < 15; x++) {
-			for (int y = 0; y < 15; y++) {
-				board[x][y].updateTile();
-			}
-		}
-		
-		// update tiles in inventory
-		for (int i = 0; i < 7; i++) {
-			inventory[i].cell = model.getCurrentPlayer().tileInventory[i];
-			inventory[i].updateTile();
-		}
-		
-		// update player/turn text
-		headerLabel.setText(model.getTurnString());
-		
 		if (model.gameStarted() && !model.gameEnded()) {
+			// update tiles on board
+			for (int x = 0; x < 15; x++) {
+				for (int y = 0; y < 15; y++) {
+					board[x][y].updateTile();
+				}
+			}
+			
+			// update tiles in inventory
+			for (int i = 0; i < 7; i++) {
+				inventory[i].cell = model.getCurrentPlayer().tileInventory[i];
+				inventory[i].updateTile();
+			}
+			
+			// update player/turn text
+			headerLabel.setText(model.getTurnString());
+			
 			frame.setVisible(true);
 		} else {
 			frame.setVisible(false);

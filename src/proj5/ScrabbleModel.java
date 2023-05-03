@@ -6,6 +6,7 @@ public class ScrabbleModel extends Model {
 	private Board board;
 	private TileBag bag;
 	private ArrayList<Player> players;
+	private ArrayList<String> names;
 	private int currentPlayer, turnNumber;
 	private boolean gameStarted, gameEnded;
 	
@@ -44,6 +45,13 @@ public class ScrabbleModel extends Model {
 		players.add(new Player(name));
 	}
 	
+	public void setNames(ArrayList<String> nameList) {
+		this.names = new ArrayList<String>();
+		for (String n : nameList ) {
+			names.add(n);
+		}
+	}
+	
 	public String getTurnString() {
 		return "Turn " + turnNumber + " - " + getCurrentPlayer().name + " - Score: " + players.get(currentPlayer).getTotalPoints();
 	}
@@ -64,7 +72,14 @@ public class ScrabbleModel extends Model {
 		updateViews();
 	}
 	
-	public void startGame() {
+	public void startGame(int num_players) {
+		updateViews();
+		for (int i = 1; i <= num_players; i++) {
+			newPlayer(names.get(i-1));	
+		}
+		
+		distributeTiles();
+		
 		gameStarted = true;
 		updateViews();
 	}
@@ -83,6 +98,4 @@ public class ScrabbleModel extends Model {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-
-	
 }

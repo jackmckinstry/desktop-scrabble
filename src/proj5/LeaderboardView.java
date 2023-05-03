@@ -1,16 +1,22 @@
 package proj5;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
-// NOTE: I commented this out because my IDE doesn't like Comparator or Collections; feel free to uncomment
-//class PlayerComparator implements Comparator<Player> {
-//    public int compare(Player p1, Player p2) {
-//        return p2.getTotalPoints() - p1.getTotalPoints();
-//    }
-//}
+class PlayerComparator implements Comparator<Player> {
+    public int compare(Player p1, Player p2) {
+        return p2.getTotalPoints() - p1.getTotalPoints();
+    }
+}
 
 public class LeaderboardView extends View {
 	private ScrabbleModel model;
@@ -31,7 +37,7 @@ public class LeaderboardView extends View {
 		headerPanel.add(headerLabel);
 		
 		ArrayList<Player> sortedPlayers = model.getPlayers();
-		//Collections.sort(sortedPlayers, new PlayerComparator());
+		Collections.sort(sortedPlayers, new PlayerComparator());
 		
 		JPanel scorePanel = new JPanel();
 		JLabel scoreLabel = new JLabel("<html>");

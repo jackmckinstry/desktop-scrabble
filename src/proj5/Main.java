@@ -6,7 +6,7 @@ public class Main {
 		Model m = new ScrabbleModel();
 		Controller c = new ScrabbleController((ScrabbleModel) m);
 		
-		// create and attatch views to model
+		// create and attach views to model
 		View menu = new MenuView(c, (ScrabbleModel) m);
 		View game = new GameView(c, (ScrabbleModel) m);
 		View leaderboard = new LeaderboardView(c, (ScrabbleModel) m);
