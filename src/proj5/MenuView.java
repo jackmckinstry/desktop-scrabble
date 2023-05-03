@@ -24,7 +24,7 @@ public class MenuView extends View {
 		model = m;
 		frame = new JFrame();
 		frame.setTitle("Scrabble");
-		buttonListener = new ButtonListener(controller);
+		buttonListener = new ButtonListener(controller, null);
 						
 		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();

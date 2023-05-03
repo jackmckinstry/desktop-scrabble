@@ -18,8 +18,8 @@ public class GameView extends View {
 		model = m;
 		frame = new JFrame();
 		frame.setTitle("Scrabble");
-		tileListener = new TileListener(controller, m);
-		buttonListener = new ButtonListener(controller);
+		tileListener = new TileListener(controller);
+		buttonListener = new ButtonListener(controller, tileListener);
 		
 		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();
@@ -33,7 +33,7 @@ public class GameView extends View {
 		board = new CellPanel[15][15];
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
-				board[x][y] = new CellPanel(model.getCell(x,y), tileListener);
+				board[x][y] = new CellPanel(model.getCell(x,y), tileListener, false);
 				boardPanel.add(board[x][y]);
 			}
 		}
@@ -42,13 +42,13 @@ public class GameView extends View {
 		JPanel inventoryPanel = new JPanel(new GridLayout(1, 7, 2, 2));
 		inventory = new CellPanel[7];
 		for (int i = 0; i < 7; i++) {
-			inventory[i] = new CellPanel(new Cell(1,1), tileListener);
+			inventory[i] = new CellPanel(new Cell(1,1), tileListener, true);
 			inventoryPanel.add(inventory[i]);
 		}
 		
 		// buttons for finishing turn and exchanging letters
-		JButton exchangeButton = new JButton("Exchange");
-		JButton finishButton = new JButton("Finish Turn");
+		JButton exchangeButton = new JButton("Exchange Tiles");
+		JButton finishButton = new JButton("Place Tiles");
 		exchangeButton.addActionListener(buttonListener);
 		finishButton.addActionListener(buttonListener);
 		inventoryPanel.add(exchangeButton);

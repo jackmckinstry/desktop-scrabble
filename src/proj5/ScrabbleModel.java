@@ -22,8 +22,9 @@ public class ScrabbleModel extends Model {
 		gameEnded = false;
 	}
 	
-	public void returnTile(Tile t) {
-		bag.returnTile(t);
+	public void returnTile(Cell c) {
+		bag.returnTile(c.tile);
+		c.tile = null;
 	}
 	
 	public void distributeTiles() {
@@ -89,25 +90,6 @@ public class ScrabbleModel extends Model {
 	}
 	public boolean gameStarted() {
 		return gameStarted;
-	}
-	
-	private ArrayList<CellPanel> toExchange;
-	public void setTilesToExchange(ArrayList<CellPanel> exchange) {
-		toExchange = new ArrayList<CellPanel>();
-		for (CellPanel c : exchange) toExchange.add(c);
-	}
-	
-	public void exchangeTiles() {
-		for (CellPanel c : toExchange) {
-			c.deselect();
-			bag.returnTile(c.cell.tile);
-			for (Cell invC : getCurrentPlayer().tileInventory) {
-				if (invC == c.cell) {
-					invC.tile = null;
-					break;
-				}
-			}
-		}
 	}
 	
 	public void endGame() {

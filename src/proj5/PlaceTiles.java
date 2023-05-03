@@ -1,11 +1,11 @@
 package proj5;
 
-public class FinishTurn implements Command {
+public class PlaceTiles implements Command {
 	ScrabbleModel model;
 	boolean[][] valid;
 	int commonX, commonY; // used in recursive markValid algorithm
 
-	public FinishTurn() {
+	public PlaceTiles() {
 		
 	}
 	
@@ -34,6 +34,7 @@ public class FinishTurn implements Command {
 			for (int y = 0; y < 15; y++) {
 				// cell is not valid
 				if (!valid[x][y]) {
+					System.out.println("Invalid tile placement.");
 					return;
 				}
 			}
@@ -51,6 +52,7 @@ public class FinishTurn implements Command {
 						int p = getPoints(x, y, 0, 0, true);
 						points += p;
 						if (p != 0 && !wordCheck.isValidWord(getWord(x, y, true))) {
+							System.out.println("Invalid word: " + getWord(x, y, true));
 							return;
 						}
 					}
@@ -60,6 +62,7 @@ public class FinishTurn implements Command {
 						int p = getPoints(x, y, 0, 0, false);
 						points += p;
 						if (p != 0 && !wordCheck.isValidWord(getWord(x, y, false))) {
+							System.out.println("Invalid word: " + getWord(x, y, false));
 							return;
 						}
 					}

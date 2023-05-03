@@ -7,12 +7,13 @@ import java.awt.event.*;
 public class CellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	public Cell cell;
-	public boolean selected;
+	public boolean selected, inInventory;
 	private JLabel valueLabel, letterLabel, multiplierLabel;
 	
-	CellPanel(Cell c, MouseListener listener) {
+	CellPanel(Cell c, MouseListener listener, boolean inv) {
 		cell = c;
 		selected = false;
+		inInventory = inv;
 		
 		updateColor();
 		addMouseListener(listener);
