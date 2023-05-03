@@ -17,6 +17,7 @@ public class GameView extends View {
 		super(c);
 		model = m;
 		frame = new JFrame();
+		frame.setTitle("Scrabble");
 		tileListener = new TileListener(controller, m);
 		buttonListener = new ButtonListener(controller);
 		

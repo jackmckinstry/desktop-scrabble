@@ -23,6 +23,7 @@ public class MenuView extends View {
 		super(c);
 		model = m;
 		frame = new JFrame();
+		frame.setTitle("Scrabble");
 		buttonListener = new ButtonListener(controller);
 						
 		// header panel with player name/turn number

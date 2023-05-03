@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * OO Pattern: Singleton
+ * The Singleton pattern (with lazy instantiation) is implemented for the WordChecker class
+ */
 public class WordChecker {
     private static WordChecker instance = null;
     private ArrayList<String> ENGLISH_WORDS;

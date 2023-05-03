@@ -26,6 +26,7 @@ public class LeaderboardView extends View {
 		super(c);
 		model = m;
 		frame = new JFrame();
+		frame.setTitle("Scrabble");
 	}
 	
 	// rendering leaderboard needs to be outside of view's constructor so it can pull the player info at the end of the game

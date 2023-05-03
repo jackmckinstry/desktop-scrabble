@@ -5,3 +5,4 @@ Created by [Alex Walker](https://github.com/alwa2786) and [Jack McKinstry](https
 Java Version 17
 
 Instructions for running the application:
+- Execute the Scrabble.jar file on a machine with Java

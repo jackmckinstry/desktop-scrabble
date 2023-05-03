@@ -14,7 +14,7 @@ public class ButtonListener implements ActionListener {
 		Object src = e.getSource();
 		if (src.toString().contains("Finish Turn")) {
 			controller.handleEvent(new FinishTurn());
-		} else if (src.toString().contains("Exchange Letters")) {
+		} else if (src.toString().contains("Exchange")) {
 			controller.handleEvent(new ExchangeTiles());
 		}
 		else if (src.toString().contains("Two")) {

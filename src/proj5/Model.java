@@ -2,6 +2,11 @@ package proj5;
 
 import java.util.ArrayList;
 
+/*
+ * OO Pattern: Observer
+ * As part of MVC, The Observer pattern exists in a Subject/Observer relationship between the Model and the View(s).
+ */
+
 public abstract class Model {
 	private ArrayList<View> views;
 	

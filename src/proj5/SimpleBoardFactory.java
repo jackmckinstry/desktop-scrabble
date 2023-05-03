@@ -1,5 +1,9 @@
 package proj5;
 
+/*
+ * OO Pattern: Factory
+ * The Simple Factory pattern is implemented for the creation of a Board with the proper cells containing word/letter bonuses.
+ */
 public class SimpleBoardFactory {
 	public static Cell[][] createEmptyBoard() {
 		Cell[][] cellArray = new Cell[15][15];
