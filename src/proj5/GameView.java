@@ -17,7 +17,7 @@ public class GameView extends View {
 		super(c);
 		model = m;
 		frame = new JFrame();
-		tileListener = new TileListener(controller);
+		tileListener = new TileListener(controller, m);
 		buttonListener = new ButtonListener(controller);
 		
 		// header panel with player name/turn number
@@ -46,7 +46,7 @@ public class GameView extends View {
 		}
 		
 		// buttons for finishing turn and exchanging letters
-		JButton exchangeButton = new JButton("Exchange Letters");
+		JButton exchangeButton = new JButton("Exchange");
 		JButton finishButton = new JButton("Finish Turn");
 		exchangeButton.addActionListener(buttonListener);
 		finishButton.addActionListener(buttonListener);
