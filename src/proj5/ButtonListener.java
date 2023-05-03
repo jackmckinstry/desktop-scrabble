@@ -1,4 +1,4 @@
-package proj5;
+ package proj5;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class ButtonListener implements ActionListener {
 	private Controller controller;
 	private TileListener tileListener;
+	private Model model;
 	
-	public ButtonListener(Controller c, TileListener t) {
+	public ButtonListener(Controller c, TileListener t, Model m) {
 		controller = c;
 		tileListener = t;
+		model = m;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -21,6 +23,9 @@ public class ButtonListener implements ActionListener {
 		} else if (src.toString().contains("Exchange Tiles")) {
 			ArrayList<Cell> toExchange = tileListener.getSelectedCells();
 			controller.handleEvent(new ExchangeTiles(toExchange));
+		}
+		else if (src.toString().contains("End")) {
+			((ScrabbleModel) model).endGame();
 		}
 		else if (src.toString().contains("Two")) {
 			controller.handleEvent(new StartGame(2));

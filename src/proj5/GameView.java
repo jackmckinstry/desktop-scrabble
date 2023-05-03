@@ -19,7 +19,7 @@ public class GameView extends View {
 		frame = new JFrame();
 		frame.setTitle("Scrabble");
 		tileListener = new TileListener(controller);
-		buttonListener = new ButtonListener(controller, tileListener);
+		buttonListener = new ButtonListener(controller, tileListener, model);
 		
 		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();
@@ -41,6 +41,11 @@ public class GameView extends View {
 		// 7 inventory slots
 		JPanel inventoryPanel = new JPanel(new GridLayout(1, 7, 2, 2));
 		inventory = new CellPanel[7];
+		
+		JButton endButton = new JButton("End");
+		endButton.addActionListener(buttonListener);
+		inventoryPanel.add(endButton);
+		
 		for (int i = 0; i < 7; i++) {
 			inventory[i] = new CellPanel(new Cell(1,1), tileListener, true);
 			inventoryPanel.add(inventory[i]);
