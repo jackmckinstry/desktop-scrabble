@@ -1,9 +1,9 @@
 package proj5;
 
 public class PlaceTiles implements Command {
-	ScrabbleModel model;
-	boolean[][] valid;
-	int commonX, commonY; // used in recursive markValid algorithm
+	private ScrabbleModel model;
+	private boolean[][] valid;
+	private int commonX, commonY; // used in recursive markValid algorithm
 
 	public PlaceTiles() {
 		
@@ -72,18 +72,19 @@ public class PlaceTiles implements Command {
 		model.getCurrentPlayer().addPoints(points);
 			
 		// finalize placement of newly-placed tiles
+		int numPlaced = 0;
 		for (int x = 0; x < 15; x++) {
 			for (int y = 0; y < 15; y++) {
 				Cell c = model.getCell(x, y);
 				if (c.hasTile() && !c.placementFinalized) {
 					c.placementFinalized = true;
+					numPlaced++;
 				}
 			}
 		}
 		
 		// 50 point bonus for using all 7 tiles
-		// TODO: ensure this doesn't happen when a player had <7 tiles to begin their turn
-		if (model.getCurrentPlayer().inventoryEmpty()) {
+		if (numPlaced == 7) {
 			model.getCurrentPlayer().addPoints(50);
 		}
 		

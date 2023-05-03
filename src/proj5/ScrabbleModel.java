@@ -57,6 +57,10 @@ public class ScrabbleModel extends Model {
 		}
 	}
 	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
 	public String getTurnString() {
 		return "Turn " + turnNumber + " - " + getCurrentPlayer().name + " - Score: " + players.get(currentPlayer).getTotalPoints();
 	}
@@ -98,9 +102,5 @@ public class ScrabbleModel extends Model {
 	}
 	public boolean gameEnded() {
 		return gameEnded;
-	}
-	
-	public ArrayList<Player> getPlayers() {
-		return players;
 	}
 }
