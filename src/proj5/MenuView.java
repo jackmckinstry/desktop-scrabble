@@ -1,7 +1,9 @@
 package proj5;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -28,10 +30,10 @@ public class MenuView extends View {
 						
 		// header panel with player name/turn number
 		JPanel headerPanel = new JPanel();
-		JLabel headerLabel = new JLabel("Enter names & select number of players:");
-		headerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
-		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPanel.add(headerLabel);
+		JLabel headerLabel1 = new JLabel("Scrabble\n");
+		headerLabel1.setFont(new Font("Arial", Font.PLAIN, 48));
+		headerLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPanel.add(headerLabel1); 
 		
 		// buttons for selecting number of players
 		JPanel buttonPanel = new JPanel();
@@ -45,24 +47,48 @@ public class MenuView extends View {
 		buttonPanel.add(threeButton);
 		buttonPanel.add(fourButton);
 		
-
 		JPanel textPanel = new JPanel();
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		textField1 = new JTextField("Player 1 Name");
 		textField2 = new JTextField("Player 2 Name");
 		textField3 = new JTextField("Player 3 Name");
 		textField4 = new JTextField("Player 4 Name");
+		JLabel headerLabel2 = new JLabel("Enter names & select number of players:");
+		headerLabel2.setFont(new Font("Arial", Font.PLAIN, 24));
+		headerLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+		textPanel.add(headerLabel2);
 		textPanel.add(textField1);
 		textPanel.add(textField2);
 		textPanel.add(textField3);
 		textPanel.add(textField4);
-        // xx
+		
+		frame.setLayout(new GridBagLayout());
+		GridBagConstraints con = new GridBagConstraints();
+		
+		con.fill = GridBagConstraints.HORIZONTAL;
+		con.weightx = 0.5;
+		con.gridx = 1;
+		con.gridy = 0;
+		frame.add(headerPanel, con);
+		
+		con.fill = GridBagConstraints.HORIZONTAL;
+		con.ipady = 40;      //make this component tall
+		con.weightx = 0.0;
+		con.gridwidth = 2;
+		con.gridx = 1;
+		con.gridy = 2;
+		frame.add(textPanel, con);
+
+		con.fill = GridBagConstraints.HORIZONTAL;
+		con.ipady = 0; 
+		con.weighty = 1.0;
+		con.anchor = GridBagConstraints.PAGE_END;
+		con.gridx = 1;
+		con.gridwidth = 2;
+		con.gridy = 2;       //third row
+		frame.add(buttonPanel, con);
 		
 		// render window
-		frame.setLayout(new BorderLayout());
-		frame.add(headerPanel, BorderLayout.PAGE_START);
-		frame.add(textPanel);
-		frame.add(buttonPanel, BorderLayout.PAGE_END);
 		frame.setSize(1000,1000);
 	}
 	
